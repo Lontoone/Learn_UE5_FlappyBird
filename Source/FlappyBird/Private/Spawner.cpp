@@ -3,6 +3,7 @@
 
 #include "Spawner.h"
 #include "BigPipe.h"
+#include "Coin.h"
 #include "Components/BoxComponent.h"
 // Sets default values
 ASpawner::ASpawner()
@@ -43,6 +44,7 @@ UFUNCTION(BlueprintCallbale) void ASpawner::SpawnPipe()
 
 
 	auto bottomPipe = GetWorld()->SpawnActor<ABigPipe>(pipe , spawnPosition , spawnRotation);
+	auto new_coin = GetWorld()->SpawnActor<ACoin>(coin, RootComponent->GetComponentLocation(), RootComponent->GetComponentRotation());
 	UE_LOG(LogTemp , Warning, TEXT("Spawn height %s , %s") , *spawnPosition.ToString() , *bottomPipe->GetActorLocation().ToString());
 	//auto topPipe = GetWorld()->SpawnActor<ABigPipe>(pipe, RootComponent->GetComponentLocation(), RootComponent->GetComponentRotation());
 }

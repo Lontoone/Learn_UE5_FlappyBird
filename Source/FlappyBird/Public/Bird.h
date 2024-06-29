@@ -18,6 +18,8 @@ public:
 	// Because of "BlueprintImplementableEvent", don't need to declaer in .cpp file
 	UFUNCTION(BlueprintImplementableEvent) void HandleReset();
 
+	UFUNCTION(BlueprintCallable) int GetScore();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -30,7 +32,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 protected:	
-
+	//FComponentBeginOverlapSignature
 private:
 	// EditeDefaultsOnly = read-only in blue print
 	UPROPERTY(EditDefaultsOnly, Category = "Components")  class UCapsuleComponent* capsuleComp;
@@ -39,8 +41,10 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Jump Components") FVector jumpStrength = FVector(0.0f,0.0f,10000.0f);  // z-up
 
 	UFUNCTION() void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	UFUNCTION() void OnOverlapStart( UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	void Jump();
 
 	APlayerController* birdPlayerController;
+	int score = 0;
 
 };

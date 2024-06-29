@@ -27,6 +27,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Components")  class UBoxComponent* boxComp;
 	UPROPERTY(EditDefaultsOnly, Category = "Components") TSubclassOf<class ABigPipe>  pipe;
+	UPROPERTY(EditDefaultsOnly, Category = "Components") TSubclassOf<class ACoin>  coin;
 
 	UFUNCTION(BlueprintCallable) void SpawnPipe();
 	FTimerHandle spawnTimer;

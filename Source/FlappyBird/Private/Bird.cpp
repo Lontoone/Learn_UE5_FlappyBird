@@ -17,6 +17,11 @@ ABird::ABird()
 	baseMeshComp->SetupAttachment(capsuleComp); //set this as a child to capsule component
 }
 
+int ABird::GetScore()
+{
+	return this->score;
+}
+
 // Called when the ga#include "Components/CapsuleComponent.h"me starts or when spawned
 void ABird::BeginPlay()
 {
@@ -24,6 +29,7 @@ void ABird::BeginPlay()
 	
 	// Register OnHit event.
 	capsuleComp->OnComponentHit.AddDynamic(this , &ABird::OnHit);
+	capsuleComp->OnComponentBeginOverlap.AddDynamic(this, &ABird::OnOverlapStart);
 }
 
 // Called every frame
@@ -53,11 +59,17 @@ void ABird::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimit
 	UE_LOG(LogTemp , Warning , TEXT("Hit %s" ) ,*OtherActor->GetName());
 }
 
+void ABird::OnOverlapStart(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	UE_LOG(LogTemp , Warning , TEXT("Overlapping"));
+	this->score++;
+	OtherActor->Destroy();
+}
+
 void ABird::Jump()
 {
-	UE_LOG(LogTemp , Warning , TEXT("Hi- Jump2"));
-	
+	//UE_LOG(LogTemp , Warning , TEXT("Hi- Jump2"));	
 	capsuleComp->AddImpulse(jumpStrength , NAME_None , true);// (jump strength , bone name)	
-	UE_LOG(LogTemp, Warning, TEXT("MyVector: %s"), *capsuleComp->ComponentVelocity.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("MyVector: %s"), *capsuleComp->ComponentVelocity.ToString());
 }
 
